@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainer Dashboard - AuraCore</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-logo">
+      <img src="assets/logo.jpg" alt="AuraCore Logo" class="brand-logo-img">
+      <div>
+        <div class="brand-title">AuraCore</div>
+        <div class="brand-subtitle">Trainer Duty & Attendance Portal</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+      <button class="btn btn-emerald btn-sm" onclick="store.returnToAdmin(); window.location.href='admin-dashboard.html';" style="font-weight: 700;">
+        ⬅️ Back to Admin Panel
+      </button>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="text-decoration: none;">🏠 Portal Choice</a>
+      <div id="trainer-header-info">
+        <button class="btn btn-secondary btn-sm" onclick="store.logout(); window.location.href='trainer-login.html';">
+          🚪 Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div id="trainer-view-container"></div>
+  </main>
+
+  <footer class="app-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+      <div><strong>AuraCore Trainer Portal</strong> • GPS Location Pinning & Attendance Verification</div>
+      <div>Helpline: <strong>87547 59353</strong></div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!store.data.currentUser || store.data.currentUser.role !== 'trainer') {
+        window.location.href = 'trainer-login.html';
+        return;
+      }
+      const container = document.getElementById('trainer-view-container');
+      renderTrainerView(container);
+      store.subscribe(() => renderTrainerView(container));
+    });
+  </script>
+</body>
+</html>
